@@ -141,7 +141,7 @@ for( user in users ) {
   
   barplot( rbind(hist.s$counts,hist.h$counts,hist.z$counts),
            main=user, border=NA, beside=F, axis.lty=1,
-           ylab="Frequency", cex.axis=2, cex.lab=2, cex.main=2, cex.names=1.3, 
+           ylab="Frequency", cex.axis=1.5, cex.lab=2, cex.main=2, cex.names=1.3, 
            xlab="consecutive Pareto decisions", names.arg=1:17, 
            col=c( adjustcolor("blue",alpha.f=0.8),
                   adjustcolor("red",alpha.f=0.8),
