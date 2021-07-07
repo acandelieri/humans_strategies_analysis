@@ -1,5 +1,7 @@
 rm(list=ls()); graphics.off(); cat("\014")
 
+library(wmwpow)
+
 load("RESULTS.RData")
 
 # loading games data
@@ -91,6 +93,7 @@ plot.new()
 legend( "left", legend=c("Pareto","Not-Pareto"), title="Type of decisions",
         fill=c("skyblue","pink"), cex=2, bty="n" )
 
+test.power <- list() 
 
 for( tf in tfs ) {
 
@@ -141,7 +144,15 @@ for( tf in tfs ) {
   cat(tf,"\t",mean(aggr.pareto,na.rm=T),"\t(",sd(aggr.pareto,na.rm=T),")\t",
       mean(aggr.no.pareto,na.rm=T),"\t(",sd(aggr.no.pareto,na.rm=T),")\t",w.t$p.value,"\n")
   
+  invisible( capture.output( tmp <- shiehpow(length(which(!is.na(aggr.pareto))), length(which(!is.na(aggr.no.pareto))), 0.2, 0.05, "norm", "two.sided" ) ) )
+  test.power[[length(test.power)+1]] <- tmp
+  
 }
 
 par( mar=curr.mar )
 par( mfrow=c(1,1) )
+
+# test power
+cat("\n\n --- Test Power (a-posteriori):\n")
+for( i in 1:length(tfs) )
+  cat(tfs[i],"\t",test.power[[i]]$power,"\n")
